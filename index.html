@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container m-5">
+        <div class="row">
+            <div class="col  " onclick="change(1)"><img  id="m1" src="photo/avatar1.jpg" alt=""> </div>
+            <div class="col  " onclick="change(2)"><img  id="m2" src="photo/avatar2.jpg" alt=""> </div>
+            <div class="col  " onclick="change(3)"><img  id="m3" src="photo/avatar1.jpg" alt=""> </div>
+            <div class="col  " onclick="change(4)"><img  id="m4" src="photo/avatar2.jpg" alt=""> </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col  " onclick="change(5)"><img  id="m5" src="photo/img-1.jpg" width="250px" height="250px" alt=""> </div>
+            <div class="col  " onclick="change(6)"><img  id="m6" src="photo/img-2.jpg" width="250px" height="250px" alt=""> </div>
+            <div class="col  " onclick="change(7)"><img  id="m7" src="photo/img-1.jpg" width="250px" height="250px" alt=""> </div>
+            <div class="col  " onclick="change(8)"><img  id="m8" src="photo/img-2.jpg" width="250px" height="250px" alt=""> </div>
+        </div>
+    </div>
+<p id="p" class="fs-3 text-center" style="position:relative; left:40%; top:-530px;">0</p>
+</body>
+</html>
+<script>
+    var counter = 1;
+    var arr = ["x","x"];
+    let map = new Map ([
+                ["img_m1","photo/avatar1.jpg"],
+                ["img_m2","photo/avatar2.jpg"],
+                ["img_m3","photo/avatar1.jpg"],
+                ["img_m4","photo/avatar2.jpg"],
+                ["img_m5","photo/img-1.jpg"],
+                ["img_m6","photo/img-2.jpg"],
+                ["img_m7","photo/img-1.jpg"],
+                ["img_m8","photo/img-2.jpg"]
+                ]);           
+    change = (num) =>{
+            arr[counter-1] = num;
+            if(arr[0]==arr[1]){
+                delete arr[1];
+                return;
+            }
+            document.getElementById("m"+num).src = map.get("img_m" + num); 
+            if(counter++==2){
+                setTimeout(() => {
+                    counter = check();    
+                }, 500);
+                
+            }
+        }
+        var score = 0;
+     check = () =>{
+         if(map.get("img_m"+arr[0]) == map.get("img_m"+arr[1])){
+             document.getElementById("p").innerHTML = ++score;
+             if(score==4){
+                 setTimeout(()=>{
+                     alert("good job");
+                     full_del();
+                     score = 0;
+                     document.getElementById("p").innerHTML = score;
+                 },500)
+             }
+         } else{
+                del(arr[1],arr[0]);
+         }
+         delete arr[0],delete arr[1];
+         return 1;
+     }
+
+    del =(x,y)=>{
+        document.getElementById("m"+x).src ="photo/avatar3.jpg";
+        document.getElementById("m"+y).src ="photo/avatar3.jpg";
+    }
+    full_del =()=>{
+        document.getElementById("m1").src ="photo/avatar3.jpg";
+        document.getElementById("m2").src ="photo/avatar3.jpg";
+        document.getElementById("m3").src ="photo/avatar3.jpg";
+        document.getElementById("m4").src ="photo/avatar3.jpg";
+        document.getElementById("m5").src ="photo/avatar3.jpg";
+        document.getElementById("m6").src ="photo/avatar3.jpg";
+        document.getElementById("m7").src ="photo/avatar3.jpg";
+        document.getElementById("m8").src ="photo/avatar3.jpg";
+    }
+    setTimeout(full_del, 1000);
+
+</script>
